@@ -42,14 +42,12 @@ public class LoginActivity extends AppCompatActivity {
                             //boolean success = jsonResponse.getBoolean("success");
 
                             if (true) {
-                                String id = jsonResponse.getString("id");
                                 String email = jsonResponse.getString("email");
                                 String authenticationToken = jsonResponse.getString("authentication_token");
 
                                 Intent intent = new Intent(LoginActivity.this, UserAreaActivity.class);
                                 intent.putExtra("login", email);
-                                intent.putExtra("id", id);
-                                intent.putExtra("authentication token", authenticationToken);
+                                intent.putExtra("authentication_token", authenticationToken);
 
                                 LoginActivity.this.startActivity(intent);
 

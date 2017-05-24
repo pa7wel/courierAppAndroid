@@ -17,9 +17,10 @@ public class UserAreaActivity extends AppCompatActivity {
         final TextView displayView = (TextView) findViewById(R.id.displayView);
 
         Intent intent = getIntent();
-        String name = intent.getStringExtra("email");
+        String name = intent.getStringExtra("login");
+        String token = intent.getStringExtra("authentication_token");
 
-        String message = name + " welcome in courierApp";
+        String message = name + token;
         displayView.setText(message);
 
     }
