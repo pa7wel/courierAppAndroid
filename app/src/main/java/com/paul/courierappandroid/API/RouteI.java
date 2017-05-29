@@ -9,7 +9,7 @@ public class RouteI {
     private String city;
     private Boolean done;
 
-    public RouteI() {
+    public RouteI(int id, String city, Boolean done) {
         this.id = id;
         this.city = city;
         this.done = done;
@@ -29,5 +29,13 @@ public class RouteI {
 
     public void setDone(Boolean done) {
         this.done = done;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }
