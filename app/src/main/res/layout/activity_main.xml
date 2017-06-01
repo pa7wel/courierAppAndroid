@@ -30,4 +30,16 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button" />
 
+    <Button
+        android:id="@+id/locationBtn"
+        android:layout_width="395dp"
+        android:layout_height="wrap_content"
+        android:onClick="locationPage"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="LOCATION"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/routeBtn" />
+
 </android.support.constraint.ConstraintLayout>

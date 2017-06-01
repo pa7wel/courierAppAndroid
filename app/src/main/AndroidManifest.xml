@@ -3,6 +3,8 @@
     package="com.paul.courierappandroid">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -20,8 +22,8 @@
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".UserAreaActivity" />
-        <activity android:name=".RouteActivity"></activity>
+        <activity android:name=".RouteActivity" />
+        <activity android:name=".LocationActivity"></activity>
     </application>
-
 
 </manifest>
