@@ -33,7 +33,7 @@ public class RouteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route);
 
-        String API_BASE_URL = "http://192.168.1.3:3000/";
+        String API_BASE_URL = "http://192.168.0.2:3000/";
 
         final ListView listView = (ListView) findViewById(R.id.list_routes);
 

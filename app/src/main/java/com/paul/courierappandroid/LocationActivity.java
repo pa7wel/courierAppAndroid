@@ -12,9 +12,21 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.paul.courierappandroid.API.ILocation;
+import com.paul.courierappandroid.API.LocationClient;
+import com.paul.courierappandroid.API.RouteClient;
+
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LocationActivity extends AppCompatActivity {
 
@@ -40,10 +52,11 @@ public class LocationActivity extends AppCompatActivity {
             @Override
             public void onLocationChanged(Location location) {
                 t.append("\n " + location.getLongitude() + " " + location.getLatitude());
-                LocationToSentX = location.getLongitude();
-                LocationToSentY = location.getAltitude();
+                double LocationToSentX = location.getLongitude();
+                double LocationToSentY = location.getAltitude();
 
                 // POST to db with x,y location
+                createLocation(LocationToSentX, LocationToSentY);
 
             }
 
@@ -94,6 +107,33 @@ public class LocationActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //noinspection MissingPermission
                 locationManager.requestLocationUpdates("gps", 5000, 0, listener);
+            }
+        });
+    }
+
+
+    public void createLocation(double longitude, double latitude) {
+        Retrofit.Builder builder =
+                new Retrofit.Builder()
+                        .baseUrl("http://192.168.0.2:3000")
+                        .addConverterFactory(
+                                GsonConverterFactory.create()
+                        );
+
+        Retrofit retrofit = builder.build();
+
+        LocationClient client =  retrofit.create(LocationClient.class);
+        Call<ILocation> call = client.createLocation(longitude, latitude);
+
+        call.enqueue(new Callback<ILocation>() {
+            @Override
+            public void onResponse(Call<ILocation> call, Response<ILocation> response) {
+                Log.d("POST", "DZIALA GOOOOD !!!!!!!!!!!!!!!!!!!" + response);
+            }
+
+            @Override
+            public void onFailure(Call<ILocation> call, Throwable t) {
+                Log.d("ERROR", "nie dziala !!!!!!!!!!!!!!!!!!!");
             }
         });
     }

@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 public class UserAreaActivity extends AppCompatActivity {
 
+    public static User currentUser;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +22,9 @@ public class UserAreaActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String name = intent.getStringExtra("login");
         String token = intent.getStringExtra("authentication_token");
+
+        currentUser = new User(name, token);
+
 
         String message = name + token;
         displayView.setText(message);

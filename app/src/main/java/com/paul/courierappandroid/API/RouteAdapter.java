@@ -73,7 +73,7 @@ public class RouteAdapter extends ArrayAdapter<RouteI> {
         return row;
     }
 
-    String API_BASE_URL = "http://192.168.1.3:3000/";
+    String API_BASE_URL = "http://192.168.0.2:3000/";
 
     public void updateRequestRoute(int id, Boolean done) {
         Retrofit.Builder builder =
