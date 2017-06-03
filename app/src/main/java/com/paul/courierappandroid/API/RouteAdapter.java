@@ -1,6 +1,8 @@
 package com.paul.courierappandroid.API;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.paul.courierappandroid.LoginActivity;
 import com.paul.courierappandroid.R;
 import com.paul.courierappandroid.RouteActivity;
 
@@ -42,7 +45,7 @@ public class RouteAdapter extends ArrayAdapter<RouteI> {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row = inflater.inflate(R.layout.route_view, parent, false);
         }
-        // ustawienie wiadomsoci
+
         TextView textView = (TextView) row.findViewById(R.id.route_text);
         final CheckBox checkBox = (CheckBox) row.findViewById(R.id.checkRoute);
         final RouteI item = values.get(position);
@@ -50,22 +53,27 @@ public class RouteAdapter extends ArrayAdapter<RouteI> {
         Boolean done = item.getDone();
         textView.setText(message);
         checkBox.setChecked(done);
-        // zaznaczenie boxa
+
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
                     Log.d("TAG", "dziala jestttttt" + position + "checkek:  " + isChecked);
                     //dane do wyslania
-                    item.setDone(true);
+                    if (item.getDone() == false) {
+                        item.setDone(true);
+                    } else {
+                        item.setDone(false);
+                    }
+
+                    //item.setDone(true);
                     Log.d("TAG", "dow sylania obiekt: " + item);
-                    int ajdik = item.getId();
-                    Log.d("ID do wyslania", "Do syalnia" + ajdik);
+                    int item_id = item.getId();
+                    Log.d("ID do wyslania", "Do syalnia" + item_id);
                     Boolean done = item.getDone();
-                    updateRequestRoute(ajdik, done);
+                    updateRequestRoute(item_id, done);
 
                 } else {
-                    //checkBox.setChecked(true);
                     System.out.println("Position " + isChecked);
                 }
             }
@@ -85,8 +93,13 @@ public class RouteAdapter extends ArrayAdapter<RouteI> {
 
         Retrofit retrofit = builder.build();
 
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        String emailNew = sharedPref.getString("X-User-Email", "");
+        String tokenNew = sharedPref.getString("X-User-Token", "");
+
+
         RouteClient client =  retrofit.create(RouteClient.class);
-        Call<RouteI> call = client.updateRoute(id, done);
+        Call<RouteI> call = client.updateRoute(id, done, emailNew, tokenNew);
 
         call.enqueue(new Callback<RouteI>() {
             @Override

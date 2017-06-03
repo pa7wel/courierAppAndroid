@@ -1,6 +1,9 @@
 package com.paul.courierappandroid;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,15 @@ public class LoginActivity extends AppCompatActivity {
                             if (true) {
                                 String email = jsonResponse.getString("email");
                                 String authenticationToken = jsonResponse.getString("authentication_token");
+
+
+                                SharedPreferences sharedPref =
+                                        PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+                                SharedPreferences.Editor editor = sharedPref.edit();
+                                editor.putString("X-User-Email", email);
+                                editor.putString("X-User-Token", authenticationToken);
+                                editor.commit();
+
 
                                 Intent intent = new Intent(LoginActivity.this, UserAreaActivity.class);
                                 intent.putExtra("login", email);

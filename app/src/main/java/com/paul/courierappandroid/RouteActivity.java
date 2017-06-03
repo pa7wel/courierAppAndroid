@@ -1,5 +1,8 @@
 package com.paul.courierappandroid;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,6 +38,14 @@ public class RouteActivity extends AppCompatActivity {
 
         String API_BASE_URL = "http://192.168.0.2:3000/";
 
+        // odwolanie do shared prefe
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(RouteActivity.this);
+        String emailNew = sharedPref.getString("X-User-Email", "");
+        String tokenNew = sharedPref.getString("X-User-Token", "");
+
+        Log.d("SPRAWDZAMY -------_>", "user: " + emailNew);
+        Log.d("SPRAWDZAMY -------_>", "token: " + tokenNew);
+
         final ListView listView = (ListView) findViewById(R.id.list_routes);
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
@@ -51,7 +62,7 @@ public class RouteActivity extends AppCompatActivity {
                         .build();
 
         RouteClient client =  retrofit.create(RouteClient.class);
-        Call<List<RouteI>> call = client.listRoutes();
+        Call<List<RouteI>> call = client.listRoutes(emailNew, tokenNew);
 
         call.enqueue(new Callback<List<RouteI>>() {
             @Override

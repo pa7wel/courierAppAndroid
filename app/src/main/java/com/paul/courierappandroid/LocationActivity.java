@@ -2,11 +2,13 @@ package com.paul.courierappandroid;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -122,8 +124,15 @@ public class LocationActivity extends AppCompatActivity {
 
         Retrofit retrofit = builder.build();
 
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(LocationActivity.this);
+        String emailNew = sharedPref.getString("X-User-Email", "");
+        String tokenNew = sharedPref.getString("X-User-Token", "");
+
+        Log.d("SPRAWDZAMY -------_>", "user: " + emailNew);
+        Log.d("SPRAWDZAMY -------_>", "token: " + tokenNew);
+
         LocationClient client =  retrofit.create(LocationClient.class);
-        Call<ILocation> call = client.createLocation(longitude, latitude);
+        Call<ILocation> call = client.createLocation(longitude, latitude, emailNew, tokenNew);
 
         call.enqueue(new Callback<ILocation>() {
             @Override
