@@ -1,11 +1,5 @@
 package com.paul.courierappandroid.API;
 
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.util.Log;
-
-import com.paul.courierappandroid.RouteActivity;
-import com.paul.courierappandroid.User;
 
 import java.util.List;
 
@@ -14,12 +8,10 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Headers;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface RouteClient {
-    //@Headers({"X-User-Email: pa7wel@gmail.com", "X-User-Token: JxcWuqkMpCCuVVW1ybEh"})
 
     @GET("v1/routes")
     Call<List<RouteI>> listRoutes(@Header("X-User-Email") String email, @Header("X-User-Token") String token);
